@@ -1,39 +1,51 @@
-#include "json.hpp"
 #include <fstream>
+#include <string>
+#include <iostream>
 using namespace std;
-using nlohmann::json;
 
 int main ()
 {
-	ifstream i ("state.json");
-	json j;
-	i >> j;
-	/*for (json::iterator it = j.begin(); it != j.end(); ++it)
-	{
-		if(it.key() == "GameBlocks")
-		{
-			cout << j["/GameBlocks/0/0/Entity/Location"_json_pointer] << endl;
-		}
-	}*/
+	ifstream i;
+	i.open("map.txt");
 
-	//Tiap GameBlocks punya 6 komponen
-	cout << j["/GameBlocks/1/1/Bomb"_json_pointer] << endl;
-	cout << j["/GameBlocks/1/1/Entity/$type"_json_pointer] << endl;
-	cout << j["/GameBlocks/1/1/Entity/Location"_json_pointer] << endl; //milik $type, klo null ini gaada
-	cout << j["/GameBlocks/1/1/PowerUp"_json_pointer] << endl;
-	cout << j["/GameBlocks/1/1/Exploding"_json_pointer] << endl;
-	cout << j["/GameBlocks/1/1/Location"_json_pointer] << endl;
+	string MyString;
+	int MapSize = 0;
 
-	//Buat bomb klo ga null ada tambahan : owner, bombradius, bomb timer, isexploding, location
+	while(i >> MyString && MyString != "PlayerBounty:")
+    {
+        if(MyString == "Width:")
+        {
+            i >> MapSize;
+        }
+    }
+    i >> MyString; //buang value playerBounty
+    i.get(); //buang enter
 
 
-	//cout << j["/RegisteredPlayerEntities/0/Key"_json_pointer] << endl;
+    /* Pembacaan Peta */
+    char gameBlocks[MapSize][MapSize];
+    char inputchar;
+    for(int j = 0; j < MapSize; ++j)
+    {
+        for(int k = 0; k < MapSize; ++k)
+        {
+            i.get(inputchar);
+            gameBlocks[j][k] = inputchar;
+        }
+        i.get(inputchar); //buang enter
+    }
 
-	/*
-	string myName;
-	myName = j["RegisteredPlayerEntries:Name"].get<string>();
-	cout << myName << endl;
-	*/
+    for(int j=0; j < MapSize; ++j)
+    {
+        for(int k = 0; k < MapSize; ++k)
+        {
+            cout << gameBlocks[j][k];
+        }
+        cout << endl;
+    }
 
-	return 0;
+
+	i.close();
+
+    return 0;
 }
