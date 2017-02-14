@@ -34,6 +34,43 @@ void readStateFile(string filePath)
 			fileContent += line += "\n";
 			cout << fileContent;
 		}
+		///////////////////////////////////////
+		string MyString;
+        int MapSize = 0;
+
+        while(myfile >> MyString && MyString != "PlayerBounty:")
+        {
+            if(MyString == "Width:")
+            {
+                myfile >> MapSize;
+            }
+        }
+        myfile >> MyString; //buang value playerBounty
+        myfile.get(); //buang enter
+
+
+        /* Pembacaan Peta */
+        char **Peta;
+        Peta = new char* [MapSize];
+        for(int i = 0; i < MapSize; ++i)
+        {
+            Peta[i] = new char [MapSize];
+        }
+
+        char inputchar;
+        for(int j = 0; j < MapSize; ++j)
+        {
+            for(int k = 0; k < MapSize; ++k)
+            {
+                myfile.get(inputchar);
+                Peta[j][k] = inputchar;
+            }
+            myfile.get(inputchar); //buang enter
+        }
+
+        if(Peta[3][3] == Tembok){ cout << "ok"; }
+
+        /////////////////////////////////////////
 		myfile.close();
 	}
 }
