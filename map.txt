@@ -1,0 +1,58 @@
+Map Width: 21, Map Height: 21, Current Round: 14, Seed: 1227714189, PlayerBounty: 315
+#####################
+#   + ++     ++ +   #
+# # #+# # # # #+# # #
+#      +  +  +  !   #
+#+# # #+# # #+# # #+#
+#   +++       +++   #
+#+#A# #+# # #+# #D#+#
+#++ + +       + + ++#
+# #+# #+#+#+#+# #+# #
+#+ +   +++++++   + +#
+# # #+# #+$+# #+# # #
+#+ +   +++++++   + +#
+# #+# #+#+#+#+# #+# #
+#++ + +       + + ++#
+#+# # #+# # #+# # #+#
+#   +++       +++   #
+#+#C# #+# # #+# #B#+#
+#   !  +  +  +      #
+# # #+# # # # #+#!# #
+#   + ++     ++ +   #
+#####################
+---------------------------
+Player Name: woy ini woy
+Key: A
+Points: 33
+Status: Alive
+Bombs: 
+BombBag: 1
+BlastRadius: 1
+---------------------------
+---------------------------
+Player Name: woy ini woy
+Key: B
+Points: 32
+Status: Alive
+Bombs: 
+BombBag: 1
+BlastRadius: 1
+---------------------------
+---------------------------
+Player Name: woy ini woy
+Key: C
+Points: 32
+Status: Alive
+Bombs: 
+BombBag: 1
+BlastRadius: 1
+---------------------------
+---------------------------
+Player Name: woy ini woy
+Key: D
+Points: 33
+Status: Alive
+Bombs: 
+BombBag: 1
+BlastRadius: 1
+---------------------------
