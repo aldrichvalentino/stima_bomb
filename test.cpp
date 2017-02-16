@@ -24,16 +24,16 @@ int main ()
 
         /* Pembacaan Peta */
         char **Peta;
-        Peta = new char* [MapSize];
-        for(int i = 0; i < MapSize; ++i)
+        Peta = new char* [MapSize+1];
+        for(int i = 1; i <= MapSize; ++i)
         {
-            Peta[i] = new char [MapSize];
+            Peta[i] = new char [MapSize+1];
         }
 
         char inputchar;
-        for(int j = 0; j < MapSize; ++j)
+        for(int j = 1; j <= MapSize; ++j)
         {
-            for(int k = 0; k < MapSize; ++k)
+            for(int k = 1; k <= MapSize; ++k)
             {
                 myfile.get(inputchar);
                 Peta[j][k] = inputchar;
@@ -43,9 +43,9 @@ int main ()
 
 
         //print peta
-        for(int i = 0; i < MapSize; ++i)
+        for(int i = 1; i <= MapSize; ++i)
         {
-            for(int j = 0; j < MapSize; ++j)
+            for(int j = 1; j <= MapSize; ++j)
             {
                 cout << Peta[i][j];
             }
@@ -53,7 +53,7 @@ int main ()
         }
 
         char temp;
-        player P[4];
+        player P[12];
         int i = 0;
 
         myfile >> MyString; //buang garis
@@ -68,8 +68,21 @@ int main ()
             getline(myfile,MyString);
             P[i].SetStatus(MyString.substr(8));
             getline(myfile,MyString);
-            //P1.SetBombX(MyString.substr()); //gatau
-            //P1.SetBombY(MyString.substr()); //gatau
+            if (MyString.length() > 7){
+                P[i].SetBombX(MyString.substr(10)); 
+                if (P[i].GetBombX() < 10){
+                    P[i].SetBombY(MyString.substr(14)); 
+                }
+                else
+                {
+                    P[i].SetBombY(MyString.substr(15));
+                }
+            }
+            else
+            {
+                P[i].SetBombX("-1");
+                P[i].SetBombY("-1");
+            }
             getline(myfile,MyString);
             P[i].SetBombBag(MyString.substr(9));
             getline(myfile,MyString);
@@ -79,10 +92,11 @@ int main ()
             i++;
         }
         
-        cout << P[1].GetName() << endl;
-        cout << P[0].GetKey() << endl;
-        cout << P[2].GetPoints() << endl;
-        cout << P[3].GetStatus() << endl;
+        cout << P[2].GetBombX() << endl;
+        cout << P[1].GetBombX() << endl;
+        cout << P[2].GetBombY() << endl;
+        cout << P[1].GetBombY() << endl;
         
+        cout << Peta[P[1].GetBombY()][P[1].GetBombX()] << endl;
         myfile.close();
 }
