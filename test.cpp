@@ -53,26 +53,36 @@ int main ()
         }
 
         char temp;
-        player P1;
+        player P[4];
+        int i = 0;
 
         myfile >> MyString; //buang garis
-        myfile.get(temp);
-        getline(myfile,MyString);
-        P1.SetName(MyString.substr(13));
-        getline(myfile,MyString);
-        P1.SetKey(MyString.substr(5));
-        getline(myfile,MyString);
-        P1.SetPoints(MyString.substr(8));
-        getline(myfile,MyString);
-        P1.SetStatus(MyString.substr(8));
-        getline(myfile,MyString);
-        //P1.SetBombX(MyString.substr()); //gatau
-        //P1.SetBombY(MyString.substr()); //gatau
-        getline(myfile,MyString);
-        P1.SetBombBag(MyString.substr(9));
-        getline(myfile,MyString);
-        P1.SetBlast(MyString.substr(13));
-        myfile >> MyString;
+        while(!myfile.eof()){
+            myfile.get(temp);
+            getline(myfile,MyString);
+            P[i].SetName(MyString.substr(13));
+            getline(myfile,MyString);
+            P[i].SetKey(MyString.substr(5));
+            getline(myfile,MyString);
+            P[i].SetPoints(MyString.substr(8));
+            getline(myfile,MyString);
+            P[i].SetStatus(MyString.substr(8));
+            getline(myfile,MyString);
+            //P1.SetBombX(MyString.substr()); //gatau
+            //P1.SetBombY(MyString.substr()); //gatau
+            getline(myfile,MyString);
+            P[i].SetBombBag(MyString.substr(9));
+            getline(myfile,MyString);
+            P[i].SetBlast(MyString.substr(13));
+            myfile >> MyString;
+            myfile >> MyString; //buang garis
+            i++;
+        }
+        
+        cout << P[1].GetName() << endl;
+        cout << P[0].GetKey() << endl;
+        cout << P[2].GetPoints() << endl;
+        cout << P[3].GetStatus() << endl;
         
         myfile.close();
 }

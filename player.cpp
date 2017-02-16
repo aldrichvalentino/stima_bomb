@@ -60,7 +60,7 @@ void player::SetKey(string a)
 
 void player::SetPoints(string x)
 {
-    Points = stoi(x);
+    Points = stoi(x,nullptr,10);
 }
 
 void player::SetStatus(string _status)
@@ -74,22 +74,22 @@ void player::SetStatus(string _status)
 
 void player::SetBombX(string i)
 {
-    Bomb[0] = stoi(i);
+    Bomb[0] = stoi(i,nullptr,10);
 }
 
 void player::SetBombY(string i)
 {
-    Bomb[1] = stoi(i);
+    Bomb[1] = stoi(i,nullptr,10);
 }
 
 void player::SetBombBag(string j)
 {
-    BombBag = stoi(j);
+    BombBag = stoi(j,nullptr,10);
 }
 
 void player::SetBlast(string y)
 {
-    BlastRadius = stoi(y);
+    BlastRadius = stoi(y,nullptr,10);
 }
 
 
