@@ -1,58 +1,58 @@
-Map Width: 21, Map Height: 21, Current Round: 14, Seed: 1227714189, PlayerBounty: 315
+Map Width: 21, Map Height: 21, Current Round: 120, Seed: 753969522, PlayerBounty: 345
 #####################
-#   + ++     ++ +   #
-# # #+# # # # #+# # #
-#      +  +  +  !   #
-#+# # #+# # #+# # #+#
-#   +++       +++   #
-#+#A# #+# # #+# #D#+#
-#++ + +       + + ++#
-# #+# #+#+#+#+# #+# #
-#+ +   +++++++   + +#
-# # #+# #+$+# #+# # #
-#+ +   +++++++   + +#
-# #+# #+#+#+#+# #+# #
-#++ + +       + + ++#
-#+# # #+# # #+# # #+#
-#   +++       +++   #
-#+#C# #+# # #+# #B#+#
-#   !  +  +  +      #
-# # #+# # # # #+#!# #
-#   + ++     ++ +   #
+#   +               #
+# # #+# # #+# # # # #
+#                  +#
+# # # # # # #&#+# #+#
+# +    +     ++  +++#
+#+#+# # # # #+# #+#+#
+# +          + ++ + #
+# # # #B# #+# #+# # #
+#      9+++++++     #
+# # # #+#+$+#+# # # #
+#       +7+++++     #
+# # # # # # # #+# # #
+#       A      ++ + #
+# # # # # # #+# #+#+#
+#                 ++#
+# # # # # # # #+# # #
+#              +    #
+# # # # # #+# # # # #
+#                   #
 #####################
 ---------------------------
 Player Name: woy ini woy
 Key: A
-Points: 33
+Points: 254
 Status: Alive
-Bombs: 
-BombBag: 1
-BlastRadius: 1
+Bombs: {x:10,y:12,fuse:7,radius:16}
+BombBag: 3
+BlastRadius: 16
 ---------------------------
 ---------------------------
 Player Name: woy ini woy
 Key: B
-Points: 32
+Points: 246
 Status: Alive
-Bombs: 
-BombBag: 1
-BlastRadius: 1
+Bombs: {x:8,y:10,fuse:9,radius:2}
+BombBag: 2
+BlastRadius: 2
 ---------------------------
 ---------------------------
 Player Name: woy ini woy
 Key: C
-Points: 32
-Status: Alive
+Points: -209
+Status: Dead
 Bombs: 
-BombBag: 1
-BlastRadius: 1
+BombBag: 2
+BlastRadius: 4
 ---------------------------
 ---------------------------
 Player Name: woy ini woy
 Key: D
-Points: 33
-Status: Alive
+Points: -226
+Status: Dead
 Bombs: 
-BombBag: 1
-BlastRadius: 1
+BombBag: 2
+BlastRadius: 2
 ---------------------------
