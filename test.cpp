@@ -62,17 +62,17 @@ int main ()
         getline(myfile,MyString);
         P1.SetKey(MyString.substr(5));
         getline(myfile,MyString);
-        P1.SetPoints(MyString.substr(9));
+        P1.SetPoints(MyString.substr(8));
         getline(myfile,MyString);
-        P1.SetStatus(MyString.substr(9));
+        P1.SetStatus(MyString.substr(8));
         getline(myfile,MyString);
-        P1.SetBombX(MyString.substr()); //gatau
-        P1.SetBombY(MyString.substr()); //gatau
+        //P1.SetBombX(MyString.substr()); //gatau
+        //P1.SetBombY(MyString.substr()); //gatau
         getline(myfile,MyString);
         P1.SetBombBag(MyString.substr(9));
         getline(myfile,MyString);
-        P1.SetBlast(MyString.substr(14));
+        P1.SetBlast(MyString.substr(13));
         myfile >> MyString;
-
+        
         myfile.close();
 }
