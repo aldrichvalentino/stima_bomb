@@ -5,7 +5,7 @@
 #include <random>
 using namespace std;
 
-void readStateFile(string filePath);
+void readStateFile(string filePath, string ckey);
 void writeMoveFile(string filePath);
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -16,12 +16,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "Player Key: " << argv[1] << std::endl;
 	cout << "File Path: " << argv[2] << std::endl;
 
-	readStateFile(filePath);
+    string CPlayer(argv[1]); //mencatat current player key
+
+	readStateFile(filePath,CPlayer);
 	writeMoveFile(filePath);
 	return 0;
 }
 
-void readStateFile(string filePath)
+void readStateFile(string filePath, string ckey)
 {
 	cout << "Reading state file " << filePath + "/" + "map.txt" << std::endl;
 	string fileContent;
@@ -68,7 +70,7 @@ void readStateFile(string filePath)
             myfile.get(inputchar); //buang enter
         }
 
-        if(Peta[3][3] == Tembok){ cout << "ok"; }
+        myfile.get(inputchar);
 
         /////////////////////////////////////////
 		myfile.close();

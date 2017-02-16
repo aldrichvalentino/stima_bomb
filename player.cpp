@@ -1,94 +1,95 @@
 //File : player.cpp
 #include "player.h"
+#include <string>
+#include <iostream>
+using namespace std;
 
-player :: player()
+player :: player() {}
+
+player :: ~player() {}
+
+string player::GetName()
 {
-	size = 4;
-	data_ = new pData[size];
-
-	for(int i = 0; i<this->size; i++) {
-		data_[i].Key = '?';
-		data_[i].Killed = false;
-		data_[i].BombBag = -1;
-		data_[i].BombRadius = -1;
-		data_[i].LocX = -1;
-		data_[i].LocY = -1;
-	}
+    return PName;
 }
 
-player :: ~player()
+string player::GetKey()
 {
-	delete [] this->data_;
-	this->size = 0;
+    return Key;
 }
 
-	int player :: GetSize()
-	{
-		return size;
-	}
-	char player :: GetKey(int i)
-	{
-		return data_[i].Key;
-	}
-	bool player :: GetKilled(int i)
-	{
-		return data_[i].Killed;
-	}
-	int player:: GetBombBag(int i)
-	{
-		return data_[i].BombBag;
-	}
-	int player :: GetBombRadius(int i)
-	{
-		return data_[i].BombRadius;
-	}
-	int player :: GetLocX(int i)
-	{
-		return data_[i].LocX;
-	}
-	int player :: GetLocY(int i)
-	{
-		return data_[i].LocY;
-	}
-	
-	void player :: SetKey(int i, char c)
-	{
-		data_[i].Key = c;
-	}
-	
-	void player :: SetKilled(int i, bool b)
-	{
-		data_[i].Killed = b;
-	}
-	
-	void player :: SetBombBag(int i, int x)
-	{
-		data_[i].BombBag = x;
-	}
-	
-	void player :: SetBombRadius(int i, int x)
-	{
-		data_[i].BombRadius = x;
-	}
-	
-	void player :: SetLocX(int i, int x)
-	{
-		data_[i].LocX = x;
-	}
-	
-	void player :: SetLocY(int i, int x)
-	{
-		data_[i].LocY = x;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+int player::GetPoints()
+{
+    return Points;
+}
+
+bool player::GetStatus()
+{
+    return Status;
+}
+
+int player::GetBombX()
+{
+    return Bomb[0];
+}
+
+int player::GetBombY()
+{
+    return Bomb[1];
+}
+
+int player::GetBombBag()
+{
+    return BombBag;
+}
+
+int player::GetBlastRadius()
+{
+    return BlastRadius;
+}
+
+void player::SetName(string name)
+{
+    PName = name;
+}
+
+void player::SetKey(string a)
+{
+    Key = a;
+}
+
+void player::SetPoints(string x)
+{
+    Points = stoi(x);
+}
+
+void player::SetStatus(string _status)
+{
+    if(_status == "Alive"){
+        Status = true;
+    } else {
+        Status = false;
+    }
+}
+
+void player::SetBombX(string i)
+{
+    Bomb[0] = stoi(i);
+}
+
+void player::SetBombY(string i)
+{
+    Bomb[1] = stoi(i);
+}
+
+void player::SetBombBag(string j)
+{
+    BombBag = stoi(j);
+}
+
+void player::SetBlast(string y)
+{
+    BlastRadius = stoi(y);
+}
+
+

@@ -1,51 +1,78 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include "player.h"
 using namespace std;
 
 int main ()
 {
-	ifstream i;
-	i.open("map.txt");
+        ifstream myfile ("map.txt");
 
-	string MyString;
-	int MapSize = 0;
+        string MyString;
+        int MapSize = 0;
 
-	while(i >> MyString && MyString != "PlayerBounty:")
-    {
-        if(MyString == "Width:")
+        while(myfile >> MyString && MyString != "PlayerBounty:")
         {
-            i >> MapSize;
+            if(MyString == "Width:")
+            {
+                myfile >> MapSize;
+            }
         }
-    }
-    i >> MyString; //buang value playerBounty
-    i.get(); //buang enter
+        myfile >> MyString; //buang value playerBounty
+        myfile.get(); //buang enter
 
 
-    /* Pembacaan Peta */
-    char gameBlocks[MapSize][MapSize];
-    char inputchar;
-    for(int j = 0; j < MapSize; ++j)
-    {
-        for(int k = 0; k < MapSize; ++k)
+        /* Pembacaan Peta */
+        char **Peta;
+        Peta = new char* [MapSize];
+        for(int i = 0; i < MapSize; ++i)
         {
-            i.get(inputchar);
-            gameBlocks[j][k] = inputchar;
+            Peta[i] = new char [MapSize];
         }
-        i.get(inputchar); //buang enter
-    }
 
-    for(int j=0; j < MapSize; ++j)
-    {
-        for(int k = 0; k < MapSize; ++k)
+        char inputchar;
+        for(int j = 0; j < MapSize; ++j)
         {
-            cout << gameBlocks[j][k];
+            for(int k = 0; k < MapSize; ++k)
+            {
+                myfile.get(inputchar);
+                Peta[j][k] = inputchar;
+            }
+            myfile.get(inputchar); //buang enter
         }
-        cout << endl;
-    }
 
 
-	i.close();
+        //print peta
+        for(int i = 0; i < MapSize; ++i)
+        {
+            for(int j = 0; j < MapSize; ++j)
+            {
+                cout << Peta[i][j];
+            }
+            cout << endl;
+        }
 
-    return 0;
+        char temp;
+        player P1;
+
+        myfile >> MyString; //buang garis
+        myfile.get(temp);
+        getline(myfile,MyString);
+        P1.SetName(MyString.substr(13));
+        getline(myfile,MyString);
+        P1.SetKey(MyString.substr(5));
+        getline(myfile,MyString);
+        P1.SetPoints(MyString.substr(9));
+        getline(myfile,MyString);
+        P1.SetStatus(MyString.substr(9));
+        getline(myfile,MyString);
+        P1.SetBombX(MyString.substr()); //gatau
+        P1.SetBombY(MyString.substr()); //gatau
+        getline(myfile,MyString);
+        P1.SetBombBag(MyString.substr(9));
+        getline(myfile,MyString);
+        P1.SetBlast(MyString.substr(14));
+        myfile >> MyString;
+
+        myfile.close();
 }

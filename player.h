@@ -1,46 +1,42 @@
 //File : player.h <class untuk info player>
 #ifndef PLAYER_H
 #define PLAYER_H
-
-typedef struct {
-	char Key;
-	bool Killed;
-	int BombBag;
-	int BombRadius;
-	int LocX;
-	int LocY;
-} pData;
+#include <string>
+using namespace std;
 
 class player {
 	public :
 		player(); //ctor
-		
 		~player(); //dtor
-		
+
 		//getter
-		int GetSize();
-		char GetKey(int i);
-		bool GetKilled(int i);
-		int GetBombBag(int i);
-		int GetBombRadius(int i);
-		int GetLocX(int i);
-		int GetLocY(int i);
-		
+		string GetName ();
+		string GetKey();
+		int GetPoints();
+		bool GetStatus();
+		int GetBombX();
+		int GetBombY();
+		int GetBombBag();
+		int GetBlastRadius();
+
 		//setter
-		void SetKey(int i, char c);
-		void SetKilled(int i, bool b);
-		void SetBombBag(int i, int x);
-		void SetBombRadius(int i, int x);
-		void SetLocX(int i, int x);
-		void SetLocY(int i, int x);
-		
+		void SetName(string name);
+		void SetKey(string a);
+		void SetPoints(string x);
+		void SetStatus(string _status);
+		void SetBombX(string i);
+		void SetBombY(string i);
+		void SetBombBag(string j);
+		void SetBlast(string y);
+
 	private :
-		int size;
-		pData* data_;
-		
+		string PName;
+		string Key;
+		int Points;
+		bool Status;
+		int Bomb[2]; //Buat simpan X,Y
+		int BombBag;
+		int BlastRadius;
 };
-
-
-
 
 #endif
