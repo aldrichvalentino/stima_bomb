@@ -154,7 +154,7 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
         int idx;
        
         //Eval Output terbaik
-        eval(Movement,i,"A",P,Peta,MapSize,idx);
+        eval(Movement,i,ckey,P,Peta,MapSize,idx);
         //Ouput Move
         move = GerakFinal(Movement);
 
