@@ -5,8 +5,8 @@
 #include <random>
 using namespace std;
 
-void readStateFile(string filePath, string ckey);
-void writeMoveFile(string filePath);
+void readStateFile(string filePath, string ckey, int& move);
+void writeMoveFile(string filePath,int move);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -17,13 +17,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout << "File Path: " << argv[2] << std::endl;
 
     string CPlayer(argv[1]); //mencatat current player key
-
-	readStateFile(filePath,CPlayer);
-	writeMoveFile(filePath);
+    int gerak;
+	readStateFile(filePath,CPlayer,gerak);
+	writeMoveFile(filePath,gerak);
 	return 0;
 }
 
-void readStateFile(string filePath, string ckey)
+void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
 {
 	cout << "Reading state file " << filePath + "/" + "map.txt" << std::endl;
 	string fileContent;
@@ -50,6 +50,7 @@ void readStateFile(string filePath, string ckey)
         myfile >> MyString; //buang value playerBounty
         myfile.get(); //buang enter
 
+
         /* Pembacaan Peta */
         char **Peta;
         Peta = new char* [MapSize+1];
@@ -67,6 +68,17 @@ void readStateFile(string filePath, string ckey)
                 Peta[j][k] = inputchar;
             }
             myfile.get(inputchar); //buang enter
+        }
+
+
+        //print peta
+        for(int i = 1; i <= MapSize; ++i)
+        {
+            for(int j = 1; j <= MapSize; ++j)
+            {
+                cout << Peta[i][j];
+            }
+            cout << endl;
         }
 
         char temp;
@@ -89,16 +101,32 @@ void readStateFile(string filePath, string ckey)
                 P[i].SetBombX(MyString.substr(10)); 
                 if (P[i].GetBombX() < 10){
                     P[i].SetBombY(MyString.substr(14)); 
+                    if (P[i].GetBombY() < 10){
+                        P[i].SetFuse(MyString.substr(21));
+                    }
+                    else
+                    {
+                        P[i].SetFuse(MyString.substr(22));
+                    }
                 }
                 else
                 {
                     P[i].SetBombY(MyString.substr(15));
+                    if (P[i].GetBombY() < 10){
+                        P[i].SetFuse(MyString.substr(22));
+                    }
+                    else
+                    {
+                        P[i].SetFuse(MyString.substr(23));
+                    }
                 }
+
             }
             else
             {
                 P[i].SetBombX("-1");
                 P[i].SetBombY("-1");
+                P[i].SetFuse("-1");
             }
             getline(myfile,MyString);
             P[i].SetBombBag(MyString.substr(9));
@@ -106,25 +134,44 @@ void readStateFile(string filePath, string ckey)
             P[i].SetBlast(MyString.substr(13));
             myfile >> MyString;
             myfile >> MyString; //buang garis
-            i++; //i adalah neff
+            i++;
         }
-        
+        i--;
+        for (int j = 0;j <= i;j++)
+        {
+            for (int k = 1;k <= MapSize;k++)
+            {
+                for (int l = 1;l <= MapSize;l++)
+                {
+                    if (Peta[k][l] == 65+j)
+                    {
+                        P[j].SetLoc(l,k);
+                    }
+                }
+            }
+        }
+        int Movement[8] = {0};
+        int idx;
+       
+        //Eval Output terbaik
+        eval(Movement,i,"A",P,Peta,MapSize,idx);
+        //Ouput Move
+        move = GerakFinal(Movement);
+
         /////////////////////////////////////////
 		myfile.close();
 	}
 }
 
-void writeMoveFile(string filePath)
+void writeMoveFile(string filePath, int move)
 {
 	cout << "Writing move file " << filePath + "/" + "move.txt" << std::endl;
 	ofstream outfile(filePath + "/" + "move.txt");
 
 	if (outfile.is_open())
 	{
-        srand(time(NULL));
-        int i = rand() % 7 + 1;
-
-		outfile << i << std::endl;
+		outfile << move << std::endl;
 		outfile.close();
 	}
 }
+

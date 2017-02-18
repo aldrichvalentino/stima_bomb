@@ -48,6 +48,20 @@ int player::GetBlastRadius()
     return BlastRadius;
 }
 
+int player::GetLocX()
+{
+    return LocX;
+}
+
+int player::GetLocY()
+{
+    return LocY;
+}
+
+int player::GetFuse()
+{
+    return Fuse;
+}
 void player::SetName(string name)
 {
     PName = name;
@@ -91,5 +105,17 @@ void player::SetBlast(string y)
 {
     BlastRadius = stoi(y,nullptr,10);
 }
+
+void player :: SetLoc(int x, int y)
+{
+    LocX = x;
+    LocY = y;
+}
+
+void player :: SetFuse(string f)
+{
+    Fuse = stoi(f,nullptr,10);
+}
+
 
 
