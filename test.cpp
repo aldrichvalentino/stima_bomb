@@ -1,14 +1,20 @@
-#include <fstream>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <time.h>
 #include "player.h"
 #include "greedy.h"
+#include <tchar.h>
 
 using namespace std;
 
+
 int main ()
-{
+{ 
+
         ifstream myfile ("map.txt");
+        
 
         string MyString;
         int MapSize = 0;
@@ -116,19 +122,17 @@ int main ()
             {
                 for (int l = 1;l <= MapSize;l++)
                 {
-                    if (Peta[k][l] == 65+j)
+                    if (Peta[k][l] == 65+j || Peta[k][l] == 97+j)
                     {
                         P[j].SetLoc(l,k);
                     }
                 }
             }
         }
+        
+        cout << JarakPowerUp("A",P,Peta,MapSize,move);
 
-        //int* move = new int [8];
-        int move[8] = {0};
-        int idx;
-       
-        eval(move,i,"A",P,Peta,MapSize,idx);
+        cout << "daftar nilai move" << endl;
         cout << move[1] << endl;
         cout << move[2] << endl;
         cout << move[3] << endl;
@@ -137,25 +141,17 @@ int main ()
         cout << move[6] << endl;
         cout << move[7] << endl;
 
+
+        cout << "location: "<< endl <<P[KeyToIdx("B")].GetLocX() << endl;
+        cout <<P[KeyToIdx("B")].GetLocY() << endl;
+        //int x = JarakPowerUp("A",P,Peta,MapSize);
+
+        //cout << x << endl;
+
         //GERAKAN YG DITARO KE txt
         int gerak = GerakFinal(move);
         cout << gerak << endl;
-
-        //cout << P[0].GetLocX() << endl;
-        //cout << P[0].GetLocY() << endl;
-        //cout << P[1].GetLocX() << endl;
-        //cout << P[1].GetLocY() << endl;
-        //cout << P[2].GetLocX() << endl;
-        //cout << P[2].GetLocY() << endl;
-
-        //cout << P[0].GetFuse() << endl;
-        //cout << P[1].GetFuse() << endl;
-       // cout << P[2].GetFuse() << endl;
-        //cout << P[2].GetBombX() << endl;
-        //cout << P[1].GetBombX() << endl;
-        //cout << P[2].GetBombY() << endl;
-        //cout << P[1].GetBombY() << endl;
-        
+       
         //cout << Peta[P[1].GetBombY()][P[1].GetBombX()] << endl;
         /*cout << i << endl;
         cout << KeyToIdx("B") << endl;

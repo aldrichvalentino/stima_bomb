@@ -26,16 +26,16 @@ int _tmain(int argc, _TCHAR* argv[])
 void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
 {
 	cout << "Reading state file " << filePath + "/" + "map.txt" << std::endl;
-	string fileContent;
-	string line;
+	//string fileContent;
+	//string line;
 	ifstream myfile(filePath + "/" + "map.txt");
 	if (myfile.is_open())
 	{
-		while (getline(myfile, line))
+		/*while (getline(myfile, line))
 		{
 			fileContent += line += "\n";
 			cout << fileContent;
-		}
+		}*/
 		///////////////////////////////////////
 		string MyString;
         int MapSize = 0;
@@ -68,17 +68,6 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
                 Peta[j][k] = inputchar;
             }
             myfile.get(inputchar); //buang enter
-        }
-
-
-        //print peta
-        for(int i = 1; i <= MapSize; ++i)
-        {
-            for(int j = 1; j <= MapSize; ++j)
-            {
-                cout << Peta[i][j];
-            }
-            cout << endl;
         }
 
         char temp;
@@ -143,21 +132,30 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
             {
                 for (int l = 1;l <= MapSize;l++)
                 {
-                    if (Peta[k][l] == 65+j)
+                    if (Peta[k][l] == 65+j || Peta[k][l] == 97+j)
                     {
                         P[j].SetLoc(l,k);
                     }
                 }
             }
         }
+        
+
         int Movement[8] = {0};
-        int idx;
        
         //Eval Output terbaik
-        eval(Movement,i,ckey,P,Peta,MapSize,idx);
+        eval(Movement,i,ckey,P,Peta,MapSize);
         //Ouput Move
         move = GerakFinal(Movement);
 
+        cout << Movement[1] << endl;
+        cout << Movement[2] << endl;
+        cout << Movement[3] << endl;
+        cout << Movement[4] << endl;
+        cout << Movement[5] << endl;
+        cout << Movement[6] << endl;
+        cout << P[KeyToIdx(ckey)].GetLocX();
+        cout << P[KeyToIdx(ckey)].GetLocY();
         /////////////////////////////////////////
 		myfile.close();
 	}

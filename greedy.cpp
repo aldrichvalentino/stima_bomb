@@ -4,13 +4,14 @@
 
 using namespace std;
 
-/*  1=up
-    2=down
-    3=left
-    4=right
-    5=place
-    6=trigger
-    7=nothing*/
+/* konstanta gerakan : {1 - up, 2 - left, 3 - right, 4 - down, 5 - bomb, 6 - trigger, 7 - nothing } */
+const int atas = 1;
+const int kiri = 2;
+const int kanan = 3;
+const int bawah = 4;
+const int putbomb = 5;
+const int trigger = 6;
+const int nothing = 7;
 
 int KeyToIdx(string k)
 {
@@ -193,18 +194,18 @@ bool IsRadiusBomb(int dir, int Neff, string key, player P[], char** Peta, int &i
 
 bool IsTembokDes(int x, int y, char** Peta)
 {
-    return (Peta[y][x] == '+');
+    return (Peta[x][y] == '+'); //yx?
 }
 
 int IsPowerUp(int x, int y, char** Peta)
 {
-    if (Peta[y][x] == '$'){
+    if (Peta[x][y] == '$'){
         return 3;
     }
-    else if (Peta[y][x] == '!'){
+    else if (Peta[x][y] == '!'){
         return 2;
     }
-    else if (Peta[y][x] == '&'){
+    else if (Peta[x][y] == '&'){
         return 1;
     }
     else {
@@ -221,12 +222,13 @@ float JarakKeMusuh(string Key, string KeyMusuh, player P[]){
     return (sqrt(temp));
 }
 
-int JarakPowerUp(string Key, player P[], char** Peta, int MapSize)
+void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
 {
     bool ada = false;
-    int radius = 5;
+    int radius = 1;
     int i = P[KeyToIdx(Key)].GetLocX() - radius; 
     int j;
+    int ret;
     while (!ada && i<=P[KeyToIdx(Key)].GetLocX() + radius)
     {
         if (i >= 1 && i <= MapSize)
@@ -246,67 +248,73 @@ int JarakPowerUp(string Key, player P[], char** Peta, int MapSize)
         }
         if (!ada)i++;
     }
+
+    //cek move
     if (!ada)
     {
-        return -1;
+        ret = -1;
     }
     else
     {
-        int x = i - P[KeyToIdx(Key)].GetLocX();
-        int y = j - P[KeyToIdx(Key)].GetLocY();
-        if (x > 0 && y > 0)
+        int x = P[KeyToIdx(Key)].GetLocX() - i; 
+        int y = P[KeyToIdx(Key)].GetLocY() - j; 
+        
+        if(x > 0 && y < 0) //powerup di kiri bawah
         {
-            if (x <= y)
+            if(x > abs(y))
             {
-                return 4;
+                ret = kiri;
+            } else
+            {
+                ret = bawah;
             }
-            else
+        } else
+        if(x > 0 && y > 0) //powerup di kiri atas
+        {
+            if(x > y)
             {
-                return 2;
+                ret = kiri;
+            } else
+            {
+                ret = atas;
+            }
+        }else
+        if(x < 0 && y < 0) //powerup di kanan bawah
+        {
+            if(abs(x) > abs(y))
+            {
+                ret = kanan;
+            } else 
+            {
+                ret = bawah;
             }
         }
-        else if (x > 0 && y < 0)
+        else
+        if(x < 0 && y > 0) //powerup di kanan atas
         {
-            if (x <= abs(y))
+            if(abs(x) > y)
             {
-                return 4;
-            }
-            else
+                ret = kanan;
+            } else 
             {
-                return 1;
+                ret = atas;
             }
         }
-        else if (x < 0 && y > 0)
-        {
-            if (abs(x) <= y)
-            {
-                return 3;
-            }
-            else
-            {
-                return 2;
-            }
-        }
-        else if (x < 0 && y < 0)
-        {
-            if (abs(x) <= abs(y))
-            {
-                return 3;
-            }
-            else
-            {
-                return 1;
-            }
-        }
+        move[ret] += 20;
     }
 }
 
 bool IsTembokUndes(int x, int y, char** Peta)
 {
+    cout << x << " " << y << endl;
+    cout << Peta[y][x] << endl;
     return (Peta[y][x] == '#');
 }
 
-
+bool IsBomb(int x, int y, char** Peta)
+{
+    return (Peta[y][x] == 1 || Peta[y][x] == 2 || Peta[y][x] == 3 || Peta[y][x] == 4 || Peta[y][x] == 5 || Peta[y][x] == 6 || Peta[y][x] == 7 || Peta[y][x] == 8 || Peta[y][x] == 9);  
+}
 
 int GerakFinal(int move[])
 {
@@ -321,6 +329,18 @@ int GerakFinal(int move[])
             max = move[i];
         }
     }
+    if (i == 2)
+    {
+        ret = 4;
+    }
+    if (i == 3)
+    {
+        ret = 2;
+    }
+    if (i == 4)
+    {
+        ret = 3;
+    }
     return ret;
 }
 
@@ -330,13 +350,16 @@ void TaruhBomb(string Key, player P[], char** Peta, int move[]) //Bomb ga untuk 
     {
         if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta)) 
         {
-            move[5] += 10; // Nilai belom fix
+            move[5] += 15; // Nilai belom fix
         }
         else
         {
-            move[5] -= 10; //Belom fix
+            move[5] -= 15; //Belom fix
         }
-
+    }
+    else
+    {
+        move[5] = -1000;
     }
 }
 
@@ -484,11 +507,11 @@ bool IsAlive(player P[], string Key)
     return (P[KeyToIdx(Key)].GetStatus());
 }
 
-void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize, int &idx)
+void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize)
 {
     //PowerUp && Destructable wall 
-    move[JarakPowerUp(Key,P,Peta,MapSize)] += 50;//TBD
-    int x;
+    JarakPowerUp(Key,P,Peta,MapSize,move); //+ 20
+    int idx;
     //Cegah jalan ke bom
     if (IsRadiusBomb(1,Neff,Key,P,Peta,idx))
     {
@@ -496,11 +519,11 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize,
         {
             if (P[idx].GetBombY() < P[KeyToIdx(Key)].GetLocY())
             {
-                move[2] += 10;
+                move[2] += 50;
             } 
             else
             {
-                move[1] += 10;
+                move[1] += 50;
             }
         }
         move[1] -= 500; 
@@ -515,30 +538,36 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize,
         {
             if (P[idx].GetBombX() < P[KeyToIdx(Key)].GetLocX())
             {
-                move[4] += 10;
+                move[4] += 50;
             } 
             else
             {
-                move[3] += 10;
+                move[3] += 50;
             }
         }
         move[3] -= 500; 
     }
     if (IsRadiusBomb(4,Neff,Key,P,Peta,idx))
     {
-        cout << idx << "guys <<"<< endl;
         move[4] -= 500; 
+    }
+    if (IsRadiusBomb(0,Neff,Key,P,Peta,idx))
+    {
+        move[1] += 10;
+        move[2] += 10;
+        move[3] += 10;
+        move[4] += 10;
     }
 
     //Taro Bomb
-    TaruhBomb(Key,P,Peta,move);
+    TaruhBomb(Key,P,Peta,move); //15 point
 
     //Trigger Bomb
-    if (P[KeyToIdx(Key)].GetBombX() != -1)
+    if (P[KeyToIdx(Key)].GetBombX() != (-1))
     {
         if (IsRadiusBombMusuh(0,Neff,Key,P,Peta))
         {
-            move[6] += 100;//TBD
+            move[6] += 20;//TBD
         }
         else
         {
@@ -554,19 +583,19 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize,
     //Gerak gaakan ke tembok
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta))
     {
-        move[1] = -999; 
+        move[2] = -999; 
     } 
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta))
     {
-        move[2] = -999; 
+        move[1] = -999; 
     } 
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(),Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(),Peta))
     {
-        move[3] = -999; 
-    } 
-    if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(),Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY()+1,Peta))
-    {
         move[4] = -999; 
+    } 
+    if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(),Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(),Peta))
+    {
+        move[3] = -999; 
     }
 
 
