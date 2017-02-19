@@ -184,8 +184,8 @@ bool IsRadiusBomb(int dir, int Neff, string key, player P[], char** Peta, int &i
                             kena = true;
                         }
                     }
-                } 
-            
+                }
+
          }
             i++;
         }
@@ -226,7 +226,7 @@ void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
 {
     bool ada = false;
     int radius = 1;
-    int i = P[KeyToIdx(Key)].GetLocX() - radius; 
+    int i = P[KeyToIdx(Key)].GetLocX() - radius;
     int j;
     int ret;
     while (!ada && i<=P[KeyToIdx(Key)].GetLocX() + radius)
@@ -238,7 +238,7 @@ void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
             {
                 if (j >= 1 && j <= MapSize)
                 {
-                    if (IsPowerUp(i,j,Peta) == 1 || IsPowerUp(i,j,Peta) == 2 || IsPowerUp(i,j,Peta) == 3 || IsTembokDes(i,j,Peta)) 
+                    if (IsPowerUp(i,j,Peta) == 1 || IsPowerUp(i,j,Peta) == 2 || IsPowerUp(i,j,Peta) == 3 || IsTembokDes(i,j,Peta))
                     {
                         ada = true;
                     }
@@ -256,9 +256,9 @@ void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
     }
     else
     {
-        int x = P[KeyToIdx(Key)].GetLocX() - i; 
-        int y = P[KeyToIdx(Key)].GetLocY() - j; 
-        
+        int x = P[KeyToIdx(Key)].GetLocX() - i;
+        int y = P[KeyToIdx(Key)].GetLocY() - j;
+
         if(x > 0 && y < 0) //powerup di kiri bawah
         {
             if(x > abs(y))
@@ -284,7 +284,7 @@ void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
             if(abs(x) > abs(y))
             {
                 ret = kanan;
-            } else 
+            } else
             {
                 ret = bawah;
             }
@@ -295,7 +295,7 @@ void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[])
             if(abs(x) > y)
             {
                 ret = kanan;
-            } else 
+            } else
             {
                 ret = atas;
             }
@@ -313,7 +313,7 @@ bool IsTembokUndes(int x, int y, char** Peta)
 
 bool IsBomb(int x, int y, char** Peta)
 {
-    return (Peta[y][x] == 1 || Peta[y][x] == 2 || Peta[y][x] == 3 || Peta[y][x] == 4 || Peta[y][x] == 5 || Peta[y][x] == 6 || Peta[y][x] == 7 || Peta[y][x] == 8 || Peta[y][x] == 9);  
+    return (Peta[y][x] == 1 || Peta[y][x] == 2 || Peta[y][x] == 3 || Peta[y][x] == 4 || Peta[y][x] == 5 || Peta[y][x] == 6 || Peta[y][x] == 7 || Peta[y][x] == 8 || Peta[y][x] == 9);
 }
 
 int GerakFinal(int move[])
@@ -348,7 +348,7 @@ void TaruhBomb(string Key, player P[], char** Peta, int move[]) //Bomb ga untuk 
 {
     if (P[KeyToIdx(Key)].GetBombBag() > 0) //cek punya bom atau ga
     {
-        if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta)) 
+        if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(), Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta) || IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta))
         {
             move[5] += 15; // Nilai belom fix
         }
@@ -375,7 +375,7 @@ bool IsRadiusBombMusuh(int dir, int Neff, string Key, player P[], char **Peta)
     int x,y;
     while (i <= Neff && !stop)
     {
-        string temp = P[i].GetKey(); 
+        string temp = P[i].GetKey();
         if (temp != Key)
         {
             if (dir == 1)
@@ -507,10 +507,141 @@ bool IsAlive(player P[], string Key)
     return (P[KeyToIdx(Key)].GetStatus());
 }
 
+void evalTembokTerdekat(string Key, player P[], char** Peta, int MapSize, int move[]) {
+    bool found;
+    int x,y,a,b;
+
+    //Nyari di atas
+    found = false;
+    x = P.[KeyToIdx(Key)].GetLocX();
+    y = P.[KeyToIdx(Key)].GetLocY()-1;
+    if (!(IsTembokUndes(x,y,Peta))) {
+            int radius=1;
+            y -= radius;
+        while((!(found)) && (y>1) && ((x+radius<MapSize) || (x-radius>1))) {
+            if (IsPowerUp(x,y,Peta)) {
+                found = true;
+            } else {
+                a = x - radius;
+                if (a<1) a=2;
+
+                b = x + radius;
+                if (b>MapSize) b=MapSize-1;
+
+                while ((!(found)) && (a<=b)) {
+                    if (IsPowerUp(a,y,Peta)) found = true;
+                    a++;
+                }
+            }
+            radius++;
+            y--;
+        }
+    }
+
+    if (found) {
+        move[atas] = MapSize - radius;
+    }
+
+    //Nyari di kiri
+    found = false;
+    x = P.[KeyToIdx(Key)].GetLocX()-1;
+    y = P.[KeyToIdx(Key)].GetLocY();
+    if (!(IsTembokUndes(x,y,Peta))) {
+            int radius=1;
+            x -= radius;
+        while((!(found)) && (x>1) && ((y+radius<MapSize) || (y-radius>1))) {
+            if (IsPowerUp(x,y,Peta)) {
+                found = true;
+            } else {
+                a = y - radius;
+                if (a<1) a=2;
+
+                b = y + radius;
+                if (b>MapSize) b=MapSize-1;
+
+                while ((!(found)) && (a<=b)) {
+                    if (IsPowerUp(x,a,Peta)) found = true;
+                    a++;
+                }
+            }
+            radius++;
+            x--;
+        }
+    }
+
+    if (found) {
+        move[kiri] = MapSize - radius;
+    }
+
+    //Nyari di kanan
+    found = false;
+    x = P.[KeyToIdx(Key)].GetLocX()+1;
+    y = P.[KeyToIdx(Key)].GetLocY();
+    if (!(IsTembokUndes(x,y,Peta))) {
+            int radius=1;
+            x += radius;
+        while((!(found)) && (x<MapSize) && ((y+radius<MapSize) || (y-radius>1))) {
+            if (IsPowerUp(x,y,Peta)) {
+                found = true;
+            } else {
+                a = y - radius;
+                if (a<1) a=2;
+
+                b = y + radius;
+                if (b>MapSize) b=MapSize-1;
+
+                while ((!(found)) && (a<=b)) {
+                    if (IsPowerUp(x,a,Peta)) found = true;
+                    a++;
+                }
+            }
+            radius++;
+            x++;
+        }
+    }
+
+    if (found) {
+        move[kanan] = MapSize - radius;
+    }
+
+    //Nyari di bawah
+    found = false;
+    x = P.[KeyToIdx(Key)].GetLocX();
+    y = P.[KeyToIdx(Key)].GetLocY()+1;
+    if (!(IsTembokUndes(x,y,Peta))) {
+            int radius=1;
+            y += radius;
+        while((!(found)) && (y<MapSize) && ((x+radius<MapSize) || (x-radius>1))) {
+            if (IsPowerUp(x,y,Peta)) {
+                found = true;
+            } else {
+                a = x - radius;
+                if (a<1) a=2;
+
+                b = x + radius;
+                if (b>MapSize) b=MapSize-1;
+
+                while ((!(found)) && (a<=b)) {
+                    if (IsPowerUp(a,y,Peta)) found = true;
+                    a++;
+                }
+            }
+            radius++;
+            y++;
+        }
+    }
+
+    if (found) {
+        move[bawah] = MapSize - radius;
+    }
+
+}
+
 void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize)
 {
-    //PowerUp && Destructable wall 
-    JarakPowerUp(Key,P,Peta,MapSize,move); //+ 20
+    //PowerUp && Destructable wall
+    evalTembokTerdekat(Key,P,Peta,MapSize,move);
+    //JarakPowerUp(Key,P,Peta,MapSize,move); //+ 20
     int idx;
     //Cegah jalan ke bom
     if (IsRadiusBomb(1,Neff,Key,P,Peta,idx))
@@ -520,17 +651,17 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize)
             if (P[idx].GetBombY() < P[KeyToIdx(Key)].GetLocY())
             {
                 move[2] += 50;
-            } 
+            }
             else
             {
                 move[1] += 50;
             }
         }
-        move[1] -= 500; 
+        move[1] -= 500;
     }
     if (IsRadiusBomb(2,Neff,Key,P,Peta,idx))
     {
-        move[2] -= 500; 
+        move[2] -= 500;
     }
     if (IsRadiusBomb(3,Neff,Key,P,Peta,idx))
     {
@@ -539,17 +670,17 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize)
             if (P[idx].GetBombX() < P[KeyToIdx(Key)].GetLocX())
             {
                 move[4] += 50;
-            } 
+            }
             else
             {
                 move[3] += 50;
             }
         }
-        move[3] -= 500; 
+        move[3] -= 500;
     }
     if (IsRadiusBomb(4,Neff,Key,P,Peta,idx))
     {
-        move[4] -= 500; 
+        move[4] -= 500;
     }
     if (IsRadiusBomb(0,Neff,Key,P,Peta,idx))
     {
@@ -583,19 +714,19 @@ void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize)
     //Gerak gaakan ke tembok
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()+1,Peta))
     {
-        move[2] = -999; 
-    } 
+        move[2] = -999;
+    }
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX(),P[KeyToIdx(Key)].GetLocY()-1,Peta))
     {
-        move[1] = -999; 
-    } 
+        move[1] = -999;
+    }
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(),Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX()+1,P[KeyToIdx(Key)].GetLocY(),Peta))
     {
-        move[4] = -999; 
-    } 
+        move[4] = -999;
+    }
     if (IsTembokDes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(),Peta) || IsTembokUndes(P[KeyToIdx(Key)].GetLocX()-1,P[KeyToIdx(Key)].GetLocY(),Peta))
     {
-        move[3] = -999; 
+        move[3] = -999;
     }
 
 

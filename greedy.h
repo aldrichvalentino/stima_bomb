@@ -41,6 +41,8 @@ void TriggerBomb(int move[],int dir, int Neff, string Key, player P[], char **Pe
 
 bool IsAlive(player P[], string Key);
 
+void evalTembokTerdekat(string Key, player P[], char** Peta, int MapSize, int move[]);
+
 void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize);
 
 #endif
