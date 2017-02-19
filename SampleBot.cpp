@@ -26,17 +26,10 @@ int _tmain(int argc, _TCHAR* argv[])
 void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
 {
 	cout << "Reading state file " << filePath + "/" + "map.txt" << std::endl;
-	//string fileContent;
-	//string line;
 	ifstream myfile(filePath + "/" + "map.txt");
 	if (myfile.is_open())
 	{
-		/*while (getline(myfile, line))
-		{
-			fileContent += line += "\n";
-			cout << fileContent;
-		}*/
-		///////////////////////////////////////
+		/////////////////////////////////////// STRATEGI GREEDY
 		string MyString;
         int MapSize = 0;
 
@@ -109,7 +102,6 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
                         P[i].SetFuse(MyString.substr(23));
                     }
                 }
-
             }
             else
             {
@@ -140,22 +132,14 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
             }
         }
         
-
-        int Movement[8] = {0};
+        int Movement[8];
+        for(int i = 0; i < 8; ++i) Movement[i] = 0;
        
         //Eval Output terbaik
         eval(Movement,i,ckey,P,Peta,MapSize);
         //Ouput Move
         move = GerakFinal(Movement);
 
-        cout << Movement[1] << endl;
-        cout << Movement[2] << endl;
-        cout << Movement[3] << endl;
-        cout << Movement[4] << endl;
-        cout << Movement[5] << endl;
-        cout << Movement[6] << endl;
-        cout << P[KeyToIdx(ckey)].GetLocX();
-        cout << P[KeyToIdx(ckey)].GetLocY();
         /////////////////////////////////////////
 		myfile.close();
 	}
@@ -163,13 +147,12 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
 
 void writeMoveFile(string filePath, int move)
 {
-	cout << "Writing move file " << filePath + "/" + "move.txt" << std::endl;
+	cout << "Writing move file " << filePath + "/" + "move.txt" << endl;
 	ofstream outfile(filePath + "/" + "move.txt");
 
 	if (outfile.is_open())
 	{
-		outfile << move << std::endl;
+		outfile << move << endl;
 		outfile.close();
 	}
 }
-

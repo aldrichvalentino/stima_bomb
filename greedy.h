@@ -25,7 +25,7 @@ int IsPowerUp(int x, int y, char** Peta);
 
 float JarakKeMusuh(string Key, string KeyMusuh, player P[]);
 
-void JarakPowerUp(string Key, player P[], char** Peta, int MapSize, int move[]);
+void MoveToEntity(string Key, player P[], char** Peta, int MapSize, int move[]);
 
 bool IsTembokUndes(int x, int y, char** Peta);
 
@@ -40,6 +40,8 @@ bool IsRadiusBombMusuh(int dir, int Neff, string Key, player P[], char **Peta);
 void TriggerBomb(int move[],int dir, int Neff, string Key, player P[], char **Peta);
 
 bool IsAlive(player P[], string Key);
+
+void EntityTerdekat(string Key, player P[], char** Peta, int MapSize, int move[]);
 
 void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize);
 
