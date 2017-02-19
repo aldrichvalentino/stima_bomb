@@ -134,10 +134,13 @@ void readStateFile(string filePath, string ckey, int& move) //ckey current KEY
         
         int Movement[8];
         for(int i = 0; i < 8; ++i) Movement[i] = 0;
+        Movement[7] = -401;
        
         //Eval Output terbaik
         eval(Movement,i,ckey,P,Peta,MapSize);
         //Ouput Move
+        for(int i = 0; i < 8; ++i) cout << "nilai move ke " << i << "  = " << Movement[i] << endl;
+       
         move = GerakFinal(Movement);
 
         /////////////////////////////////////////

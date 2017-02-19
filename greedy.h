@@ -19,7 +19,7 @@ using namespace std;
 int KeyToIdx(string k);
 
 //kasus dalam radius bomb (prekondisi tiap player bomnya 1, )
-bool IsRadiusBomb(int dir,int Neff, string key, player P[], char** Peta, int &idx);
+bool IsRadiusBomb(int dir,int Neff, string key, player P[], char** Peta, int MapSize);
 
 int IsPowerUp(int x, int y, char** Peta);
 
@@ -31,17 +31,19 @@ bool IsTembokUndes(int x, int y, char** Peta);
 
 bool IsTembokDes(int x, int y, char** Peta);
 
+bool IsTembok(int x, int y, char** Peta);
+
 int GerakFinal(int move[]);
 
 void TaruhBomb(string Key, player P[], char** Peta, int move[]); //Bomb ga untuk membunuh, bomb untuk menghancurkan TembokDes
 
 bool IsRadiusBombMusuh(int dir, int Neff, string Key, player P[], char **Peta);
 
-void TriggerBomb(int move[],int dir, int Neff, string Key, player P[], char **Peta);
-
 bool IsAlive(player P[], string Key);
 
 void EntityTerdekat(string Key, player P[], char** Peta, int MapSize, int move[]);
+
+void RunFromBomb (string Key, int Neff, player P[], char** Peta, int MapSize, int move[]);
 
 void eval(int move[],int Neff, string Key, player P[], char **Peta, int MapSize);
 
